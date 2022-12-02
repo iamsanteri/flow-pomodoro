@@ -8,6 +8,7 @@ function App() {
   const [timeThen, setTimeThen] = useState(Math.round(new Date().getTime() / 1000 + (60 * desiredMinutes)));
   const [timeLeft, setTimeLeft] = useState(timeThen - timeNow);
   const [disabled, setDisabled] = useState(false);
+  const [startNotPossible, setStartNotPossible] = useState(false);
 
   function timerStart() {
     var temptimeNow = Math.round(new Date().getTime() / 1000)
@@ -18,25 +19,59 @@ function App() {
   }
 
   function resetTimeTicker() {
-    setTimeNow(Math.round(new Date().getTime() / 1000));
-    setTimeThen(Math.round(new Date().getTime() / 1000 + (60 * desiredMinutes)));
-    setTimeLeft(timeThen - timeNow);
+    var temptimeNow = Math.round(new Date().getTime() / 1000)
+    var temptimeThen = Math.round(new Date().getTime() / 1000 + (60 * desiredMinutes))
+    var temptimeLeft = temptimeThen - temptimeNow;
+    setTimeNow(temptimeNow);
+    setTimeThen(temptimeThen);
+    setTimeLeft(temptimeLeft);
     setDisabled(false);
+    setStartNotPossible(false);
     clearInterval(window.ticker);
   }
 
-  function setUpTimeTicker(now, then, left) {
-    setTimeNow(now);
-    setTimeThen(then);
-    setTimeLeft(left);
+  function pauseTimer() {
+    clearInterval(window.ticker);
+    setDisabled(false);
+    setStartNotPossible(true);
+  }
+
+  function timerContinue() {
+    var temptimeNow = Math.round(new Date().getTime() / 1000)
+    var temptimeThen = (temptimeNow + timeLeft);
+    setUpTimeTicker(temptimeNow, temptimeThen, timeLeft);
+    setDisabled(true);
+    setStartNotPossible(false);
+  }
+
+  function setUpTimeTicker(tempTimeNow, tempTimeThen, tempTimeLeft) {
+    setTimeNow(tempTimeNow);
+    setTimeThen(tempTimeThen);
+    setTimeLeft(tempTimeLeft);
 
     window.ticker = setInterval(function() {
-      let checkTick = then - Math.round(new Date().getTime() / 1000)
+      let checkTick = tempTimeThen - Math.round(new Date().getTime() / 1000)
       setTimeLeft(checkTick);
-      if (left <= 0) {
+      if (tempTimeLeft <= 0) {
         clearInterval(window.ticker);
       }
     }, 250)
+  }
+
+  if (!disabled && !startNotPossible) {
+    var button_one = <button onClick={ timerStart } disabled={ disabled }>Start</button>;
+  }
+
+  if (!disabled && startNotPossible) {
+    var button_two = <button onClick={ timerContinue } disabled={ disabled }>Continue</button>;
+  }
+
+  if (disabled && !startNotPossible) {
+    var button_three =  <button onClick={ pauseTimer } disabled={ !disabled }>Pause</button>;
+  }
+
+  if (!disabled && startNotPossible) {
+    var button_four = <button onClick={ resetTimeTicker } disabled={ !startNotPossible }>Reset</button>;
   }
 
   return (
@@ -44,9 +79,10 @@ function App() {
       <h1>Santeri's Pomodoro App</h1>
       <h3>{ Math.floor(timeLeft / 60) }:{ (timeLeft % 60).toString().padStart(2, "0") }</h3>
       <br />
-      <br />
-      <button onClick={ timerStart } disabled={disabled}>Start</button>
-      <button onClick={ resetTimeTicker }>Stop</button>
+      { button_one }
+      { button_two }
+      { button_three }
+      { button_four }
     </div>
   );
 }
