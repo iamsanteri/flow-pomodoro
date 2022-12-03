@@ -1,19 +1,24 @@
 import './css/App.css';
 import React, { useState } from 'react';
+import PeriodCounter from './PeriodCounter.js';
+import Buttons from './Buttons.js';
 
 function App() {
-  var desiredMinutes = 30;
+  var desiredMinutes = 0.05;
   
   const [timeNow, setTimeNow] = useState(Math.round(new Date().getTime() / 1000));
   const [timeThen, setTimeThen] = useState(Math.round(new Date().getTime() / 1000 + (60 * desiredMinutes)));
   const [timeLeft, setTimeLeft] = useState(timeThen - timeNow);
   const [disabled, setDisabled] = useState(false);
   const [startNotPossible, setStartNotPossible] = useState(false);
+  const [resetAllVisible, setResetAllVisible] = useState(false);
+  const [periods, setPeriods] = useState(0);
 
   function timerStart() {
     var temptimeNow = Math.round(new Date().getTime() / 1000)
     var temptimeThen = Math.round(new Date().getTime() / 1000 + (60 * desiredMinutes))
     var temptimeLeft = temptimeThen - temptimeNow;
+    setResetAllVisible(false);
     setDisabled(true);
     setUpTimeTicker(temptimeNow, temptimeThen, temptimeLeft);
   }
@@ -28,6 +33,11 @@ function App() {
     setDisabled(false);
     setStartNotPossible(false);
     clearInterval(window.ticker);
+  }
+
+  function resetWholeTimer() {
+    setPeriods(0);
+    resetTimeTicker();
   }
 
   function pauseTimer() {
@@ -52,37 +62,36 @@ function App() {
     window.ticker = setInterval(function() {
       let checkTick = tempTimeThen - Math.round(new Date().getTime() / 1000)
       setTimeLeft(checkTick);
-      if (tempTimeLeft <= 0) {
-        clearInterval(window.ticker);
-      }
     }, 250)
   }
 
-  if (!disabled && !startNotPossible) {
-    var button_one = <button onClick={ timerStart } disabled={ disabled }>Start</button>;
-  }
-
-  if (!disabled && startNotPossible) {
-    var button_two = <button onClick={ timerContinue } disabled={ disabled }>Continue</button>;
-  }
-
-  if (disabled && !startNotPossible) {
-    var button_three =  <button onClick={ pauseTimer } disabled={ !disabled }>Pause</button>;
-  }
-
-  if (!disabled && startNotPossible) {
-    var button_four = <button onClick={ resetTimeTicker } disabled={ !startNotPossible }>Reset</button>;
+  if (timeLeft === 0) {
+    clearInterval(window.ticker);
+    setTimeLeft("00");
+    setPeriods(periods + 1);
+    setDisabled(false);
+    setStartNotPossible(true);
+    setResetAllVisible(true);
+    resetTimeTicker();
   }
 
   return (
     <div className="App">
       <h1>Santeri's Pomodoro App</h1>
-      <h3>{ Math.floor(timeLeft / 60) }:{ (timeLeft % 60).toString().padStart(2, "0") }</h3>
+      <h3>{ Math.floor(timeLeft / 60).toString().padStart(2, "0") }:{ (timeLeft % 60).toString().padStart(2, "0") }</h3>
       <br />
-      { button_one }
-      { button_two }
-      { button_three }
-      { button_four }
+      <PeriodCounter periods={periods} />
+      <br />
+      <Buttons 
+        disabled={disabled}
+        startNotPossible={startNotPossible}
+        resetAllVisible={resetAllVisible}
+        timerStart={timerStart}
+        resetTimeTicker={resetTimeTicker} 
+        resetWholeTimer={resetWholeTimer}
+        pauseTimer={pauseTimer} 
+        timerContinue={timerContinue} />
+      <br />
     </div>
   );
 }
