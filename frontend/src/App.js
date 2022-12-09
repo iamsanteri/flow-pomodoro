@@ -28,20 +28,20 @@ function App() {
   }, [completedFlows]);
 
   useEffect(() => {
-    const parsedFlowMinutes = JSON.parse(localStorage.getItem('desiredFlowMinutes'));
-    const parsedRestMinutes = JSON.parse(localStorage.getItem('desiredRestMinutes'));
+    const parsedFlowMinutes = JSON.parse(sessionStorage.getItem('desiredFlowMinutes'));
+    const parsedRestMinutes = JSON.parse(sessionStorage.getItem('desiredRestMinutes'));
     if (parsedFlowMinutes && parsedRestMinutes) {
       setDesiredFlowMinutes(parsedFlowMinutes);
       setDesiredRestMinutes(parsedRestMinutes);
     } else {
-      localStorage.setItem('desiredFlowMinutes', JSON.stringify(desiredFlowMinutes));
-      localStorage.setItem('desiredRestMinutes', JSON.stringify(desiredRestMinutes));
+      sessionStorage.setItem('desiredFlowMinutes', JSON.stringify(desiredFlowMinutes));
+      sessionStorage.setItem('desiredRestMinutes', JSON.stringify(desiredRestMinutes));
     }
 }, [desiredFlowMinutes, desiredRestMinutes]);
 
   function updateDurations(flowDuration, restDuration) {
-    localStorage.setItem('desiredFlowMinutes', JSON.stringify(flowDuration));
-    localStorage.setItem('desiredRestMinutes', JSON.stringify(restDuration));
+    sessionStorage.setItem('desiredFlowMinutes', JSON.stringify(flowDuration));
+    sessionStorage.setItem('desiredRestMinutes', JSON.stringify(restDuration));
     setDesiredFlowMinutes(flowDuration);
     setDesiredRestMinutes(restDuration);
   }
