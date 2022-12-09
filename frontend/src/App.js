@@ -1,97 +1,94 @@
+import React, { useState, useEffect } from 'react';
+import { FlowTimer, RestTimer } from './Timers';
+import Settings from './Settings';
+import { flowDurationsMap, restDurationsMap } from './config/durationsConfig';
+import TotalFlowCounter from './TotalFlowCounter';
+
 import './css/App.css';
-import React, { useState } from 'react';
-import PeriodCounter from './PeriodCounter.js';
-import Buttons from './Buttons.js';
 
 function App() {
-  var desiredMinutes = 0.05;
-  
-  const [timeNow, setTimeNow] = useState(Math.round(new Date().getTime() / 1000));
-  const [timeThen, setTimeThen] = useState(Math.round(new Date().getTime() / 1000 + (60 * desiredMinutes)));
-  const [timeLeft, setTimeLeft] = useState(timeThen - timeNow);
-  const [disabled, setDisabled] = useState(false);
-  const [startNotPossible, setStartNotPossible] = useState(false);
-  const [resetAllVisible, setResetAllVisible] = useState(false);
-  const [periods, setPeriods] = useState(0);
+  const [desiredFlowMinutes, setDesiredFlowMinutes] = useState(flowDurationsMap.flowOption1);
+  const [desiredRestMinutes, setDesiredRestMinutes] = useState(restDurationsMap.restOption1);
+  const [restingStateActive, setRestingStateActive] = useState(false);
+  const [completedFlows, setCompletedFlows] = useState(0);
+  const [stateMachine, setStateMachine] = useState("beforeStart");
 
-  function timerStart() {
-    var temptimeNow = Math.round(new Date().getTime() / 1000)
-    var temptimeThen = Math.round(new Date().getTime() / 1000 + (60 * desiredMinutes))
-    var temptimeLeft = temptimeThen - temptimeNow;
-    setResetAllVisible(false);
-    setDisabled(true);
-    setUpTimeTicker(temptimeNow, temptimeThen, temptimeLeft);
+  useEffect(() => {
+    const retrievedFlows = JSON.parse(localStorage.getItem('completedFlows'));
+    if (retrievedFlows) {
+      setCompletedFlows(retrievedFlows);
+      if (retrievedFlows > 0) {
+        setStateMachine("interflow");
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('completedFlows', JSON.stringify(completedFlows));
+  }, [completedFlows]);
+
+  useEffect(() => {
+    const parsedFlowMinutes = JSON.parse(localStorage.getItem('desiredFlowMinutes'));
+    const parsedRestMinutes = JSON.parse(localStorage.getItem('desiredRestMinutes'));
+    if (parsedFlowMinutes && parsedRestMinutes) {
+      setDesiredFlowMinutes(parsedFlowMinutes);
+      setDesiredRestMinutes(parsedRestMinutes);
+    } else {
+      localStorage.setItem('desiredFlowMinutes', JSON.stringify(desiredFlowMinutes));
+      localStorage.setItem('desiredRestMinutes', JSON.stringify(desiredRestMinutes));
+    }
+}, [desiredFlowMinutes, desiredRestMinutes]);
+
+  function updateDurations(flowDuration, restDuration) {
+    localStorage.setItem('desiredFlowMinutes', JSON.stringify(flowDuration));
+    localStorage.setItem('desiredRestMinutes', JSON.stringify(restDuration));
+    setDesiredFlowMinutes(flowDuration);
+    setDesiredRestMinutes(restDuration);
   }
 
-  function resetTimeTicker() {
-    var temptimeNow = Math.round(new Date().getTime() / 1000)
-    var temptimeThen = Math.round(new Date().getTime() / 1000 + (60 * desiredMinutes))
-    var temptimeLeft = temptimeThen - temptimeNow;
-    setTimeNow(temptimeNow);
-    setTimeThen(temptimeThen);
-    setTimeLeft(temptimeLeft);
-    setDisabled(false);
-    setStartNotPossible(false);
-    clearInterval(window.ticker);
+  function changeStateMachine(payload) {
+    setStateMachine(payload);
   }
 
-  function resetWholeTimer() {
-    setPeriods(0);
-    resetTimeTicker();
+  function resetAllFlows() {
+    setCompletedFlows(0);
   }
 
-  function pauseTimer() {
-    clearInterval(window.ticker);
-    setDisabled(false);
-    setStartNotPossible(true);
-  }
-
-  function timerContinue() {
-    var temptimeNow = Math.round(new Date().getTime() / 1000)
-    var temptimeThen = (temptimeNow + timeLeft);
-    setUpTimeTicker(temptimeNow, temptimeThen, timeLeft);
-    setDisabled(true);
-    setStartNotPossible(false);
-  }
-
-  function setUpTimeTicker(tempTimeNow, tempTimeThen, tempTimeLeft) {
-    setTimeNow(tempTimeNow);
-    setTimeThen(tempTimeThen);
-    setTimeLeft(tempTimeLeft);
-
-    window.ticker = setInterval(function() {
-      let checkTick = tempTimeThen - Math.round(new Date().getTime() / 1000)
-      setTimeLeft(checkTick);
-    }, 250)
-  }
-
-  if (timeLeft === 0) {
-    clearInterval(window.ticker);
-    setTimeLeft("00");
-    setPeriods(periods + 1);
-    setDisabled(false);
-    setStartNotPossible(true);
-    setResetAllVisible(true);
-    resetTimeTicker();
+  function periodCompleted() {
+    if (!restingStateActive) {
+      setCompletedFlows(completedFlows + 1);
+      setRestingStateActive(true);
+    } else {
+      setRestingStateActive(false);
+    }
   }
 
   return (
     <div className="App">
       <h1>Santeri's Pomodoro App</h1>
-      <h3>{ Math.floor(timeLeft / 60).toString().padStart(2, "0") }:{ (timeLeft % 60).toString().padStart(2, "0") }</h3>
-      <br />
-      <PeriodCounter periods={periods} />
-      <br />
-      <Buttons 
-        disabled={disabled}
-        startNotPossible={startNotPossible}
-        resetAllVisible={resetAllVisible}
-        timerStart={timerStart}
-        resetTimeTicker={resetTimeTicker} 
-        resetWholeTimer={resetWholeTimer}
-        pauseTimer={pauseTimer} 
-        timerContinue={timerContinue} />
-      <br />
+      { !restingStateActive ?
+      <FlowTimer
+        stateMachine={stateMachine}
+        desiredFlowMinutes={desiredFlowMinutes}
+        changeStateMachine={changeStateMachine}
+        restingStateActive={restingStateActive}
+        resetAllFlows={resetAllFlows}
+        periodCompleted={periodCompleted}
+        completedFlows={completedFlows} /> :
+      <RestTimer
+        stateMachine={stateMachine}
+        desiredRestMinutes={desiredRestMinutes} 
+        changeStateMachine={changeStateMachine} 
+        restingStateActive={restingStateActive}
+        resetAllFlows={resetAllFlows}
+        periodCompleted={periodCompleted}
+        completedFlows={completedFlows} /> }
+      <TotalFlowCounter 
+        completedFlows={completedFlows} />
+      <Settings
+        desiredFlowMinutes={desiredFlowMinutes}
+        desiredRestMinutes={desiredRestMinutes}
+        updateDurations={updateDurations} />
     </div>
   );
 }
