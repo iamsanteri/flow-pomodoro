@@ -21,11 +21,21 @@ function App() {
         setStateMachine("interflow");
       }
     }
+
+    const retrievedStatus = JSON.parse(sessionStorage.getItem('restingStateActive'));
+    if (retrievedStatus) {
+      setRestingStateActive(retrievedFlows);
+    }
   }, []);
 
   useEffect(() => {
     localStorage.setItem('completedFlows', JSON.stringify(completedFlows));
   }, [completedFlows]);
+
+  useEffect(() => {
+    sessionStorage.setItem('restingStateActive', JSON.stringify(restingStateActive));
+  }, [restingStateActive]);
+
 
   useEffect(() => {
     const parsedFlowMinutes = JSON.parse(sessionStorage.getItem('desiredFlowMinutes'));
@@ -44,6 +54,7 @@ function App() {
     sessionStorage.setItem('desiredRestMinutes', JSON.stringify(restDuration));
     setDesiredFlowMinutes(flowDuration);
     setDesiredRestMinutes(restDuration);
+    setStateMachine("beforeStart");
   }
 
   function changeStateMachine(payload) {

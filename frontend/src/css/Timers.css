@@ -1,0 +1,13 @@
+.timer {
+    max-width: 17rem;
+    padding: 2rem;
+    border-width: 2px; 
+    border: solid;
+}
+
+.flow-timer {
+    background-color: aquamarine;
+}
+.rest-timer {
+    background-color: beige;
+}

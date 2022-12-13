@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
 import ControlPad from './ControlPad';
+import './css/Timers.css';
 
 const timeUtils = {
     timeNow: function() {
@@ -24,9 +24,15 @@ function FlowTimer(props) {
     const [timeLeft, setTimeLeft] = useState(timeContainer.timeThen - timeContainer.timeNow);
 
     useEffect(() => {
-        if (timeLeft === 0) {
+        if (timeLeft <= 0) {
             restartPeriod("fromNoTimeLeft");
             props.periodCompleted();
+        }
+        window.onbeforeunload = function() {
+            if (props.stateMachine === "running") { 
+                timerPause();
+                return "The timer is still running, are you sure you want to leave?"; 
+            }
         }
     });
 
@@ -91,7 +97,7 @@ function FlowTimer(props) {
     }
 
     return (
-        <div>
+        <div className="timer flow-timer">
             <h2>Flow Timer</h2>
             <h3>{ Math.floor(timeLeft / 60).toString().padStart(2, "0") }:{ (timeLeft % 60).toString().padStart(2, "0") }</h3>
             <br />
@@ -117,11 +123,29 @@ function RestTimer(props) {
     const [timeLeft, setTimeLeft] = useState(timeContainer.timeThen - timeContainer.timeNow);
 
     useEffect(() => {
-        if (timeLeft === 0) {
+        if (timeLeft <= 0) {
             restartPeriod("fromNoTimeLeft");
             props.periodCompleted();
         }
+        window.onbeforeunload = function() {
+            if (props.stateMachine === "running") { 
+                timerPause();
+                return "The timer is still running, are you sure you want to leave?"; 
+            }
+        }
     });
+
+    useEffect(() => {
+        (() => {
+            let tempTimeNow = timeUtils.timeNow();
+            let tempTimeThen = timeUtils.timeThen(null ,props.desiredRestMinutes).calculatedRestMinutes;
+            let tempTimeLeft = tempTimeThen - tempTimeNow;
+            setTimeLeft("00");
+            setTimeContainer({timeNow: tempTimeNow, timeThen: tempTimeThen});
+            setTimeLeft(tempTimeLeft);
+            clearInterval(window.ticker);
+        })();
+    }, [props.desiredRestMinutes]);
     
     function timerStart() {
         let temptimeNow = timeUtils.timeNow();
@@ -172,7 +196,7 @@ function RestTimer(props) {
     }
 
     return (
-        <div>
+        <div className="timer rest-timer" >
             <h2>Rest Timer</h2>
             <h3>{ Math.floor(timeLeft / 60).toString().padStart(2, "0") }:{ (timeLeft % 60).toString().padStart(2, "0") }</h3>
             <br />
