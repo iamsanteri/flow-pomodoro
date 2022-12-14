@@ -134,8 +134,13 @@ function RestTimer(props) {
 
     const [timeLeft, setTimeLeft] = useState(timeContainer.timeThen - timeContainer.timeNow);
 
+    const [ringSound] = useSound(ringSfx);
+    const [startSound] = useSound(startSfx);
+    const [switchSound] = useSound(switchSfx);
+
     useEffect(() => {
         if (timeLeft <= 0) {
+            ringSound();
             restartPeriod("fromNoTimeLeft");
             props.periodCompleted();
         }
@@ -160,6 +165,7 @@ function RestTimer(props) {
     }, [props.desiredRestMinutes]);
     
     function timerStart() {
+        startSound();
         let temptimeNow = timeUtils.timeNow();
         let temptimeThen = timeUtils.timeThen(null, props.desiredRestMinutes).calculatedRestMinutes;
         let temptimeLeft = temptimeThen - temptimeNow;
@@ -177,6 +183,7 @@ function RestTimer(props) {
     }
 
     function timerPause() {
+        switchSound();
         clearInterval(window.ticker);
         props.changeStateMachine("paused");
     }
