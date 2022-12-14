@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ControlPad from './ControlPad';
+import useSound from 'use-sound';
+import ringSfx from './assets/sounds/ring.mp3';
+import startSfx from './assets/sounds/start.mp3';
+import switchSfx from './assets/sounds/switch.mp3';
 import './css/Timers.css';
 
 const timeUtils = {
@@ -23,8 +27,13 @@ function FlowTimer(props) {
 
     const [timeLeft, setTimeLeft] = useState(timeContainer.timeThen - timeContainer.timeNow);
 
+    const [ringSound] = useSound(ringSfx);
+    const [startSound] = useSound(startSfx);
+    const [switchSound] = useSound(switchSfx);
+
     useEffect(() => {
         if (timeLeft <= 0) {
+            ringSound(); 
             restartPeriod("fromNoTimeLeft");
             props.periodCompleted();
         }
@@ -49,6 +58,7 @@ function FlowTimer(props) {
     }, [props.desiredFlowMinutes]);
     
     function timerStart() {
+        startSound();
         let temptimeNow = timeUtils.timeNow();
         let temptimeThen = timeUtils.timeThen(props.desiredFlowMinutes).calculatedFlowMinutes;
         let temptimeLeft = temptimeThen - temptimeNow;
@@ -66,11 +76,13 @@ function FlowTimer(props) {
     }
 
     function timerPause() {
+        switchSound();
         clearInterval(window.ticker);
         props.changeStateMachine("paused");
     }
 
     function timerContinue() {
+        startSound();
         let temptimeNow = timeUtils.timeNow();
         let temptimeThen = (temptimeNow + timeLeft);
         setUpTimeTicker(temptimeNow, temptimeThen, timeLeft);

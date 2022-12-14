@@ -1,9 +1,14 @@
 import React from 'react';
+import useSound from 'use-sound';
 import './css/ControlPad.css';
+import resetSfx from './assets/sounds/reset.mp3';
 
 function ControlPad(props) {
 
+    const [resetSound] = useSound(resetSfx);
+
     function handleResetAllFlows() {
+        resetSound();
         if (window.confirm("Are you sure you want to reset all flows and sessions?")) {
             props.restartPeriod("fromResetAllFlows");
             props.resetAllFlows();
