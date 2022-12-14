@@ -31,6 +31,12 @@ function App() {
     if (retrievedStatus) {
       setRestingStateActive(retrievedFlows);
     }
+
+    if (!("Notification" in window)) {
+      console.log("This browser does not support desktop notifications");
+    } else {
+      Notification.requestPermission();
+    }
   }, []);
 
   useEffect(() => {

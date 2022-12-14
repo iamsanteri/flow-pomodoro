@@ -4,6 +4,7 @@ import useSound from 'use-sound';
 import ringSfx from './assets/sounds/ring.mp3';
 import startSfx from './assets/sounds/start.mp3';
 import switchSfx from './assets/sounds/switch.mp3';
+import notificationIcon from './assets/images/logo512.png';
 import './css/Timers.css';
 
 const timeUtils = {
@@ -33,7 +34,16 @@ function FlowTimer(props) {
 
     useEffect(() => {
         if (timeLeft <= 0) {
-            ringSound(); 
+            let notification = new Notification("Flow completed!", {
+                body: 'That was a good session, perhaps some rest now?',
+                icon: notificationIcon,
+                image: notificationIcon,
+                vibrate: [200, 100, 200]
+            });
+            notification.onclick = () => {
+                window.focus();
+            }
+            ringSound();
             restartPeriod("fromNoTimeLeft");
             props.periodCompleted();
         }
@@ -140,6 +150,15 @@ function RestTimer(props) {
 
     useEffect(() => {
         if (timeLeft <= 0) {
+            let notification = new Notification("Rest completed!", {
+                body: 'Are you ready to continue?',
+                icon: notificationIcon,
+                image: notificationIcon,
+                vibrate: [200, 100, 200]
+            });
+            notification.onclick = () => {
+                window.focus();
+            }
             ringSound();
             restartPeriod("fromNoTimeLeft");
             props.periodCompleted();
