@@ -7,6 +7,11 @@ import switchSfx from './assets/sounds/switch.mp3';
 import notificationIcon from './assets/images/logo512.png';
 import './css/Timers.css';
 
+var ua = window.navigator.userAgent;
+var iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+var webkit = !!ua.match(/WebKit/i);
+var iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+
 const timeUtils = {
     timeNow: function() {
         return Math.round(new Date().getTime() / 1000);
@@ -34,14 +39,16 @@ function FlowTimer(props) {
 
     useEffect(() => {
         if (timeLeft <= 0) {
-            let notification = new Notification("Flow completed!", {
-                body: 'That was a good session, perhaps some rest now?',
-                icon: notificationIcon,
-                image: notificationIcon,
-                vibrate: [200, 100, 200]
-            });
-            notification.onclick = () => {
-                window.focus();
+            if (!iOSSafari) {
+                let notification = new Notification("Flow completed!", {
+                    body: 'That was a good session, perhaps some rest now?',
+                    icon: notificationIcon,
+                    image: notificationIcon,
+                    vibrate: [200, 100, 200]
+                });
+                notification.onclick = () => {
+                    window.focus();
+                }
             }
             ringSound();
             restartPeriod("fromNoTimeLeft");
@@ -150,14 +157,16 @@ function RestTimer(props) {
 
     useEffect(() => {
         if (timeLeft <= 0) {
-            let notification = new Notification("Rest completed!", {
-                body: 'Are you ready to continue?',
-                icon: notificationIcon,
-                image: notificationIcon,
-                vibrate: [200, 100, 200]
-            });
-            notification.onclick = () => {
-                window.focus();
+            if (!iOSSafari) {
+                let notification = new Notification("Flow completed!", {
+                    body: 'That was a good session, perhaps some rest now?',
+                    icon: notificationIcon,
+                    image: notificationIcon,
+                    vibrate: [200, 100, 200]
+                });
+                notification.onclick = () => {
+                    window.focus();
+                }
             }
             ringSound();
             restartPeriod("fromNoTimeLeft");
