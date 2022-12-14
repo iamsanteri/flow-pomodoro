@@ -4,8 +4,12 @@ import './css/ControlPad.css';
 function ControlPad(props) {
 
     function handleResetAllFlows() {
-        props.restartPeriod("fromResetAllFlows");
-        props.resetAllFlows();
+        if (window.confirm("Are you sure you want to reset all flows and sessions?")) {
+            props.restartPeriod("fromResetAllFlows");
+            props.resetAllFlows();
+        } else {
+            return;
+        };
     }
 
     const beforeStartTemplate = (
@@ -22,16 +26,22 @@ function ControlPad(props) {
         <div>
             { !props.restingStateActive ? 
             <button onClick={props.timerContinue}>Continue flow</button> :
-            <button onClick={props.timerContinue}>Continue rest</button> }
+            <div>
+                <button onClick={props.timerContinue}>Continue rest</button>
+                <button onClick={props.handleTimerSkip}>Skip the break</button>
+            </div> }
             <button onClick={props.restartPeriod}>Restart current timer</button>
         </div>
     );
     const interflowTemplate = (
         <div>
-            { !props.restingStateActive ? 
-            <button onClick={props.timerStart}>Start flow</button> : 
-            <button onClick={props.timerStart}>Start rest</button> }
-            <button onClick={handleResetAllFlows}>Reset all flows</button>
+            { !props.restingStateActive ?
+                <button onClick={props.timerStart}>Start flow</button> :
+            <div> 
+                <button onClick={props.timerStart}>Start rest</button> 
+                <button onClick={props.handleTimerSkip}>Skip the break</button> 
+            </div> }
+            <button onClick={handleResetAllFlows}>Reset all flows and sessions</button>
         </div>
         
     );

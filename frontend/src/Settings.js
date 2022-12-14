@@ -44,7 +44,7 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
         } else {
             restValue = restDurationsMap.restOption3; 
         }
-        updateDurations(flowValue, restValue); 
+        updateDurations(flowValue, restValue);
     }
 
     function handleFlowOptionChange(changeEvent) {

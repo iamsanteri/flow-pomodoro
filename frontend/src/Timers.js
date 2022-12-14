@@ -176,6 +176,11 @@ function RestTimer(props) {
         props.changeStateMachine("running");
     }
 
+    function handleTimerSkip() {
+        restartPeriod("fromNoTimeLeft");
+        props.periodCompleted();
+    }
+
     function restartPeriod(commandOrigin) {
         let tempTimeNow = timeUtils.timeNow();
         let tempTimeThen = timeUtils.timeThen(null ,props.desiredRestMinutes).calculatedRestMinutes;
@@ -206,6 +211,7 @@ function RestTimer(props) {
                 timerPause={timerPause} 
                 timerContinue={timerContinue}
                 restartPeriod={restartPeriod}
+                handleTimerSkip={handleTimerSkip}
                 resetAllFlows={props.resetAllFlows}
                 restingStateActive={props.restingStateActive} />
         </div>
