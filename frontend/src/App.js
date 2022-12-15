@@ -4,6 +4,8 @@ import Settings from './Settings';
 import { flowDurationsMap, restDurationsMap } from './config/durationsConfig';
 import CompleteComp from './CompleteComp';
 import './css/App.css';
+import useSound from 'use-sound';
+import settingSfx from './assets/sounds/settings.mp3';
 
 function App() {
   const [desiredFlowMinutes, setDesiredFlowMinutes] = useState(flowDurationsMap.flowOption1);
@@ -14,6 +16,8 @@ function App() {
   const [showComplete, setShowComplete] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [stateMachine, setStateMachine] = useState("beforeStart");
+
+  const [settingSound] = useSound(settingSfx);
 
   useEffect(() => {
     const retrievedFlows = JSON.parse(localStorage.getItem('completedFlows'));
@@ -64,6 +68,7 @@ function App() {
   }, [desiredFlowMinutes, desiredRestMinutes]);
 
   function updateDurations(flowDuration, restDuration) {
+    settingSound();
     sessionStorage.setItem('desiredFlowMinutes', JSON.stringify(flowDuration));
     sessionStorage.setItem('desiredRestMinutes', JSON.stringify(restDuration));
     setDesiredFlowMinutes(flowDuration);
@@ -102,6 +107,7 @@ function App() {
   }
 
   function handleShowSettings() {
+    settingSound();
     setShowSettings(!showSettings);
   }
 

@@ -5,6 +5,7 @@ import useSound from 'use-sound';
 import ringSfx from './assets/sounds/ring.mp3';
 import startSfx from './assets/sounds/start.mp3';
 import switchSfx from './assets/sounds/switch.mp3';
+import skipSfx from './assets/sounds/skip.mp3';
 import notificationIcon from './assets/images/logo512.png';
 import './css/Timers.css';
 
@@ -161,6 +162,7 @@ function RestTimer(props) {
     const [ringSound] = useSound(ringSfx);
     const [startSound] = useSound(startSfx);
     const [switchSound] = useSound(switchSfx);
+    const [skipSound] = useSound(skipSfx);
 
     useEffect(() => {
         if (timeLeft <= 0) {
@@ -231,6 +233,7 @@ function RestTimer(props) {
     }
 
     function handleTimerSkip() {
+        skipSound();
         restartPeriod("fromNoTimeLeft");
         props.periodCompleted();
     }
