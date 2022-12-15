@@ -83,7 +83,7 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
                         className="m-1" 
                         checked={selectedFlowMinutes === "flowOption2"} 
                         onChange={handleFlowOptionChange} />
-                    30
+                    { flowDurationsMap.flowOption2 }
                 </label>
                 <br />
                 <label>
@@ -93,7 +93,7 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
                         className="m-1"
                         checked={selectedFlowMinutes === "flowOption3"} 
                         onChange={handleFlowOptionChange} />
-                    60
+                    { flowDurationsMap.flowOption3 }
                 </label>
                 <br />
                 <br />
@@ -115,7 +115,7 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
                         checked={selectedRestMinutes === "restOption2"}
                         className="m-1"
                         onChange={handleRestOptionChange} />
-                    5
+                    { restDurationsMap.restOption2 }
                 </label>
                 <br />
                 <label>
@@ -125,7 +125,7 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
                         checked={selectedRestMinutes === "restOption3"}
                         className="m-1"
                         onChange={handleRestOptionChange} />
-                    10
+                    { restDurationsMap.restOption3 }
                 </label>
                 <br />
                 <br />

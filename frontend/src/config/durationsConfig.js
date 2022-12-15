@@ -1,6 +1,6 @@
 const flowDurationsMap = {
     flowOption1: 0.05,
-    flowOption2: 30,
+    flowOption2: 25,
     flowOption3: 60
 }
 
