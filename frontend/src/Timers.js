@@ -134,9 +134,9 @@ function FlowTimer(props) {
     }
 
     return (
-        <div className="rounded m-5 p-10 bg-gradient-to-r from-slate-100 to-pink-100">
-            <h2 className="text-2xl mt-5 mb-5 text-center font-extrabold">Flow Timer</h2>
-            <h3 className="text-center font-semibold text-4xl">{ Math.floor(timeLeft / 60).toString().padStart(2, "0") }:{ (timeLeft % 60).toString().padStart(2, "0") }</h3>
+        <div className="rounded m-5 p-10 bg-gradient-to-r from-slate-100 to-pink-100 dark:from-red-800 dark:to-pink-900">
+            <h2 className="text-2xl mt-5 mb-5 text-center dark:text-white font-extrabold">Flow Timer</h2>
+            <h3 className="text-center dark:text-white font-semibold text-4xl">{ Math.floor(timeLeft / 60).toString().padStart(2, "0") }:{ (timeLeft % 60).toString().padStart(2, "0") }</h3>
             <TotalFlowCounter
                 stateMachine={props.stateMachine}
                 completedFlows={props.completedFlows}
@@ -266,9 +266,9 @@ function RestTimer(props) {
     }
 
     return (
-        <div className="rounded m-5 p-10 bg-gradient-to-r from-pink-100 to-slate-100">
-            <h2 className="text-2xl mt-5 mb-5 text-center font-extrabold">Rest Timer</h2>
-            <h3 className="text-center font-semibold text-4xl">{ Math.floor(timeLeft / 60).toString().padStart(2, "0") }:{ (timeLeft % 60).toString().padStart(2, "0") }</h3>
+        <div className="rounded m-5 p-10 bg-gradient-to-r from-pink-100 to-slate-100 dark:from-pink-900 dark:to-red-800">
+            <h2 className="text-2xl mt-5 mb-5 text-center dark:text-white font-extrabold">Rest Timer</h2>
+            <h3 className="text-center dark:text-white font-semibold text-4xl">{ Math.floor(timeLeft / 60).toString().padStart(2, "0") }:{ (timeLeft % 60).toString().padStart(2, "0") }</h3>
             <TotalFlowCounter
                 stateMachine={props.stateMachine}
                 completedFlows={props.completedFlows}

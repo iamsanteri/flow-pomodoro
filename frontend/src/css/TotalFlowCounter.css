@@ -25,3 +25,25 @@
     height: 3rem; width:3rem;
     border-right: 0.2rem solid black;
 }
+
+@media (prefers-color-scheme: dark) {
+    .circle {
+        width: 1rem; height: 1rem;
+        border-radius: 50%;
+        border: 0.19rem solid white;
+        overflow: hidden;
+        display: inline-block;
+    }
+    
+    .half-state {
+        background-color: white;
+        height: 2rem; width: 0.35rem;
+        border-right: 0.2rem solid white;
+    }
+
+    .full-state {
+        background-color: white;
+        height: 3rem; width:3rem;
+        border-right: 0.2rem solid white;
+    }
+}

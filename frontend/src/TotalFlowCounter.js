@@ -89,8 +89,8 @@ function TotalFlowCounter(props) {
                     <div className="circle"><div className={circleFour}></div></div>
                 </div>
             </div>
-            <h3 className='font-semibold mt-3 mb-1'>{ props.completedFlows } / 4</h3>
-            <span className="large-sessions-modifier"> (Large sessions: { props.completedLargeSessions })</span>
+            <h3 className='font-semibold dark:text-white mt-3 mb-1'>{ props.completedFlows } / 4</h3>
+            <span className="large-sessions-modifier dark:text-white"> (Large sessions: { props.completedLargeSessions })</span>
         </div>
     );
 }

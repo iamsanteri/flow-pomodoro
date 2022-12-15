@@ -62,11 +62,11 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
     }
 
     return (
-        <div className="bg-slate-100 m-5 p-10 rounded">
-            <h2 className="text-2xl mt-5 mb-5 font-extrabold">Settings</h2>
+        <div className="bg-slate-100 dark:bg-slate-700 m-5 p-10 rounded">
+            <h2 className="text-2xl mt-5 mb-5 dark:text-white font-extrabold">Settings</h2>
             <form className="">
-                <h4 className="mb-2 font-semibold">Desired flow minutes: </h4>
-                <label>
+                <h4 className="mb-2 dark:text-white font-semibold">Desired flow minutes: </h4>
+                <label className="dark:text-white">
                     <input 
                         type="radio" 
                         value="flowOption1"
@@ -76,7 +76,7 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
                     Test
                 </label>
                 <br />
-                <label>
+                <label className="dark:text-white">
                     <input 
                         type="radio" 
                         value="flowOption2"
@@ -86,7 +86,7 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
                     { flowDurationsMap.flowOption2 }
                 </label>
                 <br />
-                <label>
+                <label className="dark:text-white">
                     <input 
                         type="radio" 
                         value="flowOption3" 
@@ -97,8 +97,8 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
                 </label>
                 <br />
                 <br />
-                <h4 className="mb-2 font-semibold">Desired rest minutes: </h4>
-                <label>
+                <h4 className="mb-2 dark:text-white font-semibold">Desired rest minutes: </h4>
+                <label className="dark:text-white">
                     <input 
                         type="radio" 
                         value="restOption1"
@@ -108,7 +108,7 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
                     Test
                 </label>
                 <br />
-                <label>
+                <label className="dark:text-white">
                     <input 
                         type="radio" 
                         value="restOption2" 
@@ -118,7 +118,7 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
                     { restDurationsMap.restOption2 }
                 </label>
                 <br />
-                <label>
+                <label className="dark:text-white">
                     <input 
                         type="radio" 
                         value="restOption3" 

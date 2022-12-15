@@ -112,8 +112,8 @@ function App() {
   }
 
   return (
-    <div className="App p-5">
-      <h1 className="text-3xl font-extrabold mt-2 mb-2 text-center">Santeri's Pomodoro</h1>
+    <div className="App h-screen dark:bg-slate-800 p-5">
+      <h1 className="text-3xl font-extrabold dark:text-white mt-2 mb-2 text-center">Santeri's Pomodoro</h1>
       { !showSettings && <div>
         { showComplete ?
         <CompleteComp continueToNextSet={continueToNextSet} /> :
@@ -146,7 +146,7 @@ function App() {
           desiredRestMinutes={desiredRestMinutes}
           updateDurations={updateDurations} /> :
         <div className="text-center">
-          <button onClick={handleShowSettings} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Show settings</button>
+          <button onClick={handleShowSettings} className="font-medium text-blue-600 dark:text-blue-400 hover:underline">Show settings</button>
         </div> }
       </div>
     </div>
