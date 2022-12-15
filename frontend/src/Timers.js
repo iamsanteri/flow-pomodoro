@@ -7,7 +7,8 @@ import startSfx from './assets/sounds/start.mp3';
 import switchSfx from './assets/sounds/switch.mp3';
 import skipSfx from './assets/sounds/skip.mp3';
 import restartSfx from './assets/sounds/restart.mp3';
-import notificationIcon from './assets/images/logo512.png';
+import timeToRestIcon from './assets/images/timetorest.png';
+import timeToWorkIcon from './assets/images/timetowork.png';
 import './css/Timers.css';
 
 var ua = window.navigator.userAgent;
@@ -47,8 +48,8 @@ function FlowTimer(props) {
             if (!iOSSafariAndroidChrome) {
                 let notification = new Notification("Flow completed!", {
                     body: 'That was a good session, perhaps some rest now?',
-                    icon: notificationIcon,
-                    image: notificationIcon,
+                    icon: timeToRestIcon,
+                    image: timeToRestIcon,
                     vibrate: [200, 100, 200]
                 });
                 notification.onclick = () => {
@@ -173,8 +174,8 @@ function RestTimer(props) {
             if (!iOSSafariAndroidChrome) {
                 let notification = new Notification("Flow completed!", {
                     body: 'That was a good session, perhaps some rest now?',
-                    icon: notificationIcon,
-                    image: notificationIcon,
+                    icon: timeToWorkIcon,
+                    image: timeToWorkIcon,
                     vibrate: [200, 100, 200]
                 });
                 notification.onclick = () => {
