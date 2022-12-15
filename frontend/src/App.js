@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { FlowTimer, RestTimer } from './Timers';
 import Settings from './Settings';
 import { flowDurationsMap, restDurationsMap } from './config/durationsConfig';
-import TotalFlowCounter from './TotalFlowCounter';
 import CompleteComp from './CompleteComp';
 import './css/App.css';
 
@@ -13,6 +12,7 @@ function App() {
   const [completedFlows, setCompletedFlows] = useState(0);
   const [completedLargeSessions, setCompletedLargeSessions] = useState(0);
   const [showComplete, setShowComplete] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [stateMachine, setStateMachine] = useState("beforeStart");
 
   useEffect(() => {
@@ -70,6 +70,7 @@ function App() {
     setDesiredRestMinutes(restDuration);
     setShowComplete(false);
     setRestingStateActive(false);
+    setShowSettings(false);
     setStateMachine("beforeStart");
   }
 
@@ -100,39 +101,48 @@ function App() {
     setRestingStateActive(false);
   }
 
+  function handleShowSettings() {
+    setShowSettings(!showSettings);
+  }
+
   return (
-    <div className="App">
-      <h1>Santeri's Pomodoro App</h1>
-      { showComplete ?
-      <CompleteComp continueToNextSet={continueToNextSet} /> :
-      <div>
-        { !restingStateActive ?
-        <FlowTimer
-          stateMachine={stateMachine}
-          desiredFlowMinutes={desiredFlowMinutes}
-          changeStateMachine={changeStateMachine}
-          restingStateActive={restingStateActive}
-          resetAllFlows={resetAllFlows}
-          periodCompleted={periodCompleted}
-          completedFlows={completedFlows} /> :
-        <RestTimer
-          stateMachine={stateMachine}
-          desiredRestMinutes={desiredRestMinutes} 
-          changeStateMachine={changeStateMachine} 
-          restingStateActive={restingStateActive}
-          resetAllFlows={resetAllFlows}
-          periodCompleted={periodCompleted}
-          completedFlows={completedFlows} /> }
+    <div className="App p-5">
+      <h1 className="text-3xl font-extrabold mt-2 mb-2 text-center">Santeri's Pomodoro</h1>
+      { !showSettings && <div>
+        { showComplete ?
+        <CompleteComp continueToNextSet={continueToNextSet} /> :
+        <div>
+          { !restingStateActive ?
+          <FlowTimer
+            stateMachine={stateMachine}
+            desiredFlowMinutes={desiredFlowMinutes}
+            changeStateMachine={changeStateMachine}
+            restingStateActive={restingStateActive}
+            resetAllFlows={resetAllFlows}
+            periodCompleted={periodCompleted}
+            completedFlows={completedFlows}
+            completedLargeSessions={completedLargeSessions} /> :
+          <RestTimer
+            stateMachine={stateMachine}
+            desiredRestMinutes={desiredRestMinutes} 
+            changeStateMachine={changeStateMachine} 
+            restingStateActive={restingStateActive}
+            resetAllFlows={resetAllFlows}
+            periodCompleted={periodCompleted}
+            completedFlows={completedFlows}
+            completedLargeSessions={completedLargeSessions} /> }
+        </div> }
       </div> }
-        <TotalFlowCounter
-          stateMachine={stateMachine}
-          completedFlows={completedFlows}
-          restingStateActive={restingStateActive}
-          completedLargeSessions={completedLargeSessions} />
+      <div>
+        { showSettings ?
         <Settings
           desiredFlowMinutes={desiredFlowMinutes}
           desiredRestMinutes={desiredRestMinutes}
-          updateDurations={updateDurations} />
+          updateDurations={updateDurations} /> :
+        <div className="text-center">
+          <button onClick={handleShowSettings} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Show settings</button>
+        </div> }
+      </div>
     </div>
   );
 }

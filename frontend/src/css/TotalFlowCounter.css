@@ -7,7 +7,7 @@
 }
 
 .circle {
-    width: 0.7rem; height: 0.7rem;
+    width: 1rem; height: 1rem;
     border-radius: 50%;
     border: 0.19rem solid black;
     overflow: hidden;
@@ -16,7 +16,7 @@
   
 .half-state {
     background-color: black;
-    height: 2rem; width: 0.21rem;
+    height: 2rem; width: 0.35rem;
     border-right: 0.2rem solid black;
 }
 

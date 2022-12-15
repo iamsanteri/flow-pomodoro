@@ -56,14 +56,15 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
     }
 
     return (
-        <div>
-            <h2>Settings</h2>
-            <form>
-                <h4>Desired flow minutes: </h4>
+        <div className="bg-slate-100 m-5 p-10 rounded">
+            <h2 className="text-2xl mt-5 mb-5 font-extrabold">Settings</h2>
+            <form className="">
+                <h4 className="mb-2 font-semibold">Desired flow minutes: </h4>
                 <label>
                     <input 
                         type="radio" 
                         value="flowOption1"
+                        className="m-1"
                         checked={selectedFlowMinutes === "flowOption1"}
                         onChange={handleFlowOptionChange} />
                     Test
@@ -72,7 +73,8 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
                 <label>
                     <input 
                         type="radio" 
-                        value="flowOption2" 
+                        value="flowOption2"
+                        className="m-1" 
                         checked={selectedFlowMinutes === "flowOption2"} 
                         onChange={handleFlowOptionChange} />
                     30
@@ -82,18 +84,20 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
                     <input 
                         type="radio" 
                         value="flowOption3" 
+                        className="m-1"
                         checked={selectedFlowMinutes === "flowOption3"} 
                         onChange={handleFlowOptionChange} />
                     60
                 </label>
                 <br />
                 <br />
-                <h4>Desired rest minutes: </h4>
+                <h4 className="mb-2 font-semibold">Desired rest minutes: </h4>
                 <label>
                     <input 
                         type="radio" 
                         value="restOption1"
                         checked={selectedRestMinutes === "restOption1"}
+                        className="m-1"
                         onChange={handleRestOptionChange} />
                     Test
                 </label>
@@ -102,7 +106,8 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
                     <input 
                         type="radio" 
                         value="restOption2" 
-                        checked={selectedRestMinutes === "restOption2"} 
+                        checked={selectedRestMinutes === "restOption2"}
+                        className="m-1"
                         onChange={handleRestOptionChange} />
                     5
                 </label>
@@ -111,13 +116,14 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
                     <input 
                         type="radio" 
                         value="restOption3" 
-                        checked={selectedRestMinutes === "restOption3"} 
+                        checked={selectedRestMinutes === "restOption3"}
+                        className="m-1"
                         onChange={handleRestOptionChange} />
                     10
                 </label>
                 <br />
                 <br />
-                <button type="submit" onClick={saveNewSettings}>Update duration settings</button>
+                <button type="submit" onClick={saveNewSettings} className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Update duration settings</button>
             </form>
         </div>
     ); 

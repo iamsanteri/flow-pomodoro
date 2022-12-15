@@ -80,17 +80,17 @@ function TotalFlowCounter(props) {
     }
 
     return (
-        <div>
-            <h2>Progress:</h2>
-            <div className="circle-container">
-                <div className="circle"><div className={circleOne}></div></div>
-                <div className="circle"><div className={circleTwo}></div></div>
-                <div className="circle"><div className={circleThree}></div></div>
-                <div className="circle"><div className={circleFour}></div></div>
+        <div className="text-center mt-3">
+            <div className="mb-2">
+                <div className="circle-container">
+                    <div className="circle"><div className={circleOne}></div></div>
+                    <div className="circle"><div className={circleTwo}></div></div>
+                    <div className="circle"><div className={circleThree}></div></div>
+                    <div className="circle"><div className={circleFour}></div></div>
+                </div>
             </div>
-            <h3>{ props.completedFlows } / 4 
-                <span className="large-sessions-modifier"> (Large sessions: { props.completedLargeSessions } )</span>
-            </h3>
+            <h3 className='font-semibold mt-3 mb-1'>{ props.completedFlows } / 4</h3>
+            <span className="large-sessions-modifier"> (Large sessions: { props.completedLargeSessions } )</span>
         </div>
     );
 }

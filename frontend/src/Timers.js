@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import TotalFlowCounter from './TotalFlowCounter';
 import ControlPad from './ControlPad';
 import useSound from 'use-sound';
 import ringSfx from './assets/sounds/ring.mp3';
@@ -127,9 +128,14 @@ function FlowTimer(props) {
     }
 
     return (
-        <div className="timer flow-timer">
-            <h2>Flow Timer</h2>
-            <h3>{ Math.floor(timeLeft / 60).toString().padStart(2, "0") }:{ (timeLeft % 60).toString().padStart(2, "0") }</h3>
+        <div className="rounded m-5 p-10 bg-gradient-to-r from-slate-100 to-pink-100">
+            <h2 className="text-2xl mt-5 mb-5 text-center font-extrabold">Flow Timer</h2>
+            <h3 className="text-center font-semibold text-4xl">{ Math.floor(timeLeft / 60).toString().padStart(2, "0") }:{ (timeLeft % 60).toString().padStart(2, "0") }</h3>
+            <TotalFlowCounter
+                stateMachine={props.stateMachine}
+                completedFlows={props.completedFlows}
+                restingStateActive={props.restingStateActive}
+                completedLargeSessions={props.completedLargeSessions} />
             <br />
             <ControlPad
                 stateMachine={props.stateMachine}
@@ -249,9 +255,14 @@ function RestTimer(props) {
     }
 
     return (
-        <div className="timer rest-timer" >
-            <h2>Rest Timer</h2>
-            <h3>{ Math.floor(timeLeft / 60).toString().padStart(2, "0") }:{ (timeLeft % 60).toString().padStart(2, "0") }</h3>
+        <div className="rounded m-5 p-10 bg-gradient-to-r from-pink-100 to-slate-100">
+            <h2 className="text-2xl mt-5 mb-5 text-center font-extrabold">Rest Timer</h2>
+            <h3 className="text-center font-semibold text-4xl">{ Math.floor(timeLeft / 60).toString().padStart(2, "0") }:{ (timeLeft % 60).toString().padStart(2, "0") }</h3>
+            <TotalFlowCounter
+                stateMachine={props.stateMachine}
+                completedFlows={props.completedFlows}
+                restingStateActive={props.restingStateActive}
+                completedLargeSessions={props.completedLargeSessions} />
             <br />
             <ControlPad
                 stateMachine={props.stateMachine}
