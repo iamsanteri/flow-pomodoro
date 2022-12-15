@@ -173,8 +173,8 @@ function RestTimer(props) {
     useEffect(() => {
         if (timeLeft <= 0) {
             if (!iOSSafariAndroidChrome) {
-                let notification = new Notification("Flow completed!", {
-                    body: 'That was a good session, perhaps some rest now?',
+                let notification = new Notification("Ready to continue?", {
+                    body: "Re-energized? Let's get back to work.",
                     icon: timeToWorkIcon,
                     image: timeToWorkIcon,
                     vibrate: [200, 100, 200]
