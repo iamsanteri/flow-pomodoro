@@ -8,9 +8,10 @@ import notificationIcon from './assets/images/logo512.png';
 import './css/Timers.css';
 
 var ua = window.navigator.userAgent;
+var androidChrome = !!ua.match(/Android/i);
 var iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
 var webkit = !!ua.match(/WebKit/i);
-var iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+var iOSSafariAndroidChrome = iOS && webkit && androidChrome && !ua.match(/CriOS/i);
 
 const timeUtils = {
     timeNow: function() {
@@ -39,7 +40,7 @@ function FlowTimer(props) {
 
     useEffect(() => {
         if (timeLeft <= 0) {
-            if (!iOSSafari) {
+            if (!iOSSafariAndroidChrome) {
                 let notification = new Notification("Flow completed!", {
                     body: 'That was a good session, perhaps some rest now?',
                     icon: notificationIcon,
@@ -157,7 +158,7 @@ function RestTimer(props) {
 
     useEffect(() => {
         if (timeLeft <= 0) {
-            if (!iOSSafari) {
+            if (!iOSSafariAndroidChrome) {
                 let notification = new Notification("Flow completed!", {
                     body: 'That was a good session, perhaps some rest now?',
                     icon: notificationIcon,
