@@ -112,7 +112,7 @@ function App() {
   }
 
   return (
-    <div className="App h-screen dark:bg-slate-800 p-5">
+    <div className="App h-screen dark:bg-slate-800 p-3 pt-10">
       <h1 className="text-3xl font-extrabold dark:text-white mt-5 mb-2 text-center">Santeri's Pomodoro</h1>
       { !showSettings && <div>
         { showComplete ?
