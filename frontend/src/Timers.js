@@ -9,10 +9,9 @@ import notificationIcon from './assets/images/logo512.png';
 import './css/Timers.css';
 
 var ua = window.navigator.userAgent;
-var androidChrome = !!ua.match(/Android/i);
 var iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
 var webkit = !!ua.match(/WebKit/i);
-var iOSSafariAndroidChrome = iOS && webkit && androidChrome && !ua.match(/CriOS/i);
+var iOSSafariAndroidChrome = iOS && webkit && !ua.match(/CriOS/i);
 
 const timeUtils = {
     timeNow: function() {
