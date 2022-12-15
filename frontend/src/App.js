@@ -146,7 +146,7 @@ function App() {
           desiredRestMinutes={desiredRestMinutes}
           updateDurations={updateDurations} /> :
         <div className="text-center">
-          <button onClick={handleShowSettings} className="font-medium text-blue-600 dark:text-blue-400 hover:underline">Show settings</button>
+          <button onClick={handleShowSettings} className="font-medium mt-2 text-blue-600 dark:text-blue-400 hover:underline">Show settings</button>
         </div> }
       </div>
     </div>
