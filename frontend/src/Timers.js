@@ -6,6 +6,7 @@ import ringSfx from './assets/sounds/ring.mp3';
 import startSfx from './assets/sounds/start.mp3';
 import switchSfx from './assets/sounds/switch.mp3';
 import skipSfx from './assets/sounds/skip.mp3';
+import restartSfx from './assets/sounds/restart.mp3';
 import notificationIcon from './assets/images/logo512.png';
 import './css/Timers.css';
 
@@ -39,6 +40,7 @@ function FlowTimer(props) {
     const [ringSound] = useSound(ringSfx);
     const [startSound] = useSound(startSfx);
     const [switchSound] = useSound(switchSfx);
+    const [restartSound] = useSound(restartSfx);
 
     useEffect(() => {
         if (timeLeft <= 0) {
@@ -124,6 +126,7 @@ function FlowTimer(props) {
         } else if (props.completedFlows === 0) {
           props.changeStateMachine("beforeStart");
         } else {
+          restartSound();
           props.changeStateMachine("interflow");
         }
     }
@@ -163,6 +166,7 @@ function RestTimer(props) {
     const [startSound] = useSound(startSfx);
     const [switchSound] = useSound(switchSfx);
     const [skipSound] = useSound(skipSfx);
+    const [restartSound] = useSound(restartSfx);
 
     useEffect(() => {
         if (timeLeft <= 0) {
@@ -253,6 +257,7 @@ function RestTimer(props) {
         } else if (props.completedFlows === 0) {
           props.changeStateMachine("beforeStart");
         } else {
+          restartSound();
           props.changeStateMachine("interflow");
         }
     }

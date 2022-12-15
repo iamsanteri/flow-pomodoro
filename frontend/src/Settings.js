@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { flowDurationsMap, restDurationsMap } from './config/durationsConfig';
+import useSound from 'use-sound';
+import clickSfx from './assets/sounds/click.mp3';
 
 function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
     const [selectedFlowMinutes, setSelectedFlowMinutes] = useState(Object.keys(flowDurationsMap)[0]);
     const [selectedRestMinutes, setSelectedRestMinutes] = useState(Object.keys(restDurationsMap)[0]);
+
+    const [clickSound] = useSound(clickSfx);
 
     useEffect(() => {
         if (desiredFlowMinutes === flowDurationsMap.flowOption1) {
@@ -48,10 +52,12 @@ function Settings({ desiredFlowMinutes, desiredRestMinutes, updateDurations }) {
     }
 
     function handleFlowOptionChange(changeEvent) {
+        clickSound();
         setSelectedFlowMinutes(changeEvent.target.value);
     }
 
     function handleRestOptionChange(changeEvent) {
+        clickSound();
         setSelectedRestMinutes(changeEvent.target.value);
     }
 
