@@ -125,6 +125,7 @@ function FlowTimer(props) {
         } else if (commandOrigin === "fromNoTimeLeft") {
           props.changeStateMachine("interflow");
         } else if (props.completedFlows === 0) {
+          restartSound();
           props.changeStateMachine("beforeStart");
         } else {
           restartSound();
@@ -256,6 +257,7 @@ function RestTimer(props) {
         } else if (commandOrigin === "fromNoTimeLeft") {
           props.changeStateMachine("interflow");
         } else if (props.completedFlows === 0) {
+          restartSound();
           props.changeStateMachine("beforeStart");
         } else {
           restartSound();
