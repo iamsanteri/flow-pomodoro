@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './css/index.css';
 import App from './App';
 import reportWebVitals from './config/reportWebVitals';
-import * as serviceWorkerRegistration from './config/serviceWorkerRegistration';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 function DocumentHead() {
