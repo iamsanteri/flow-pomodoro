@@ -90,7 +90,7 @@ function TotalFlowCounter(props) {
                 </div>
             </div>
             <h3 className='font-semibold mt-3 mb-1'>{ props.completedFlows } / 4</h3>
-            <span className="large-sessions-modifier"> (Large sessions: { props.completedLargeSessions } )</span>
+            <span className="large-sessions-modifier"> (Large sessions: { props.completedLargeSessions })</span>
         </div>
     );
 }
