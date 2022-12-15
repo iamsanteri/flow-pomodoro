@@ -11,7 +11,8 @@ import './css/Timers.css';
 var ua = window.navigator.userAgent;
 var iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
 var webkit = !!ua.match(/WebKit/i);
-var iOSSafariAndroidChrome = iOS && webkit && !ua.match(/CriOS/i);
+var android = !!ua.match(/Android/i);
+var iOSSafariAndroidChrome = iOS && android && webkit && !ua.match(/CriOS/i);
 
 const timeUtils = {
     timeNow: function() {
